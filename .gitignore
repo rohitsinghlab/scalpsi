@@ -3,6 +3,13 @@
 *.h5
 *.loom
 
+# Symlinks to external storage (local only, not tracked)
+data
+data_archive
+rawdata
+runs
+src
+
 # Results and outputs
 DataSet2/
 plots/
