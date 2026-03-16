@@ -1,0 +1,55 @@
+# Large data files — download separately (see data/README.md)
+*.h5ad
+*.h5
+*.loom
+
+# Results and outputs
+DataSet2/
+plots/
+gears_logs/
+residual_datasets/residuals_cell_specific.parquet
+control_compare_backed/
+
+# Logs
+*.log
+*.out
+*.err
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.installed.cfg
+pip-selfcheck.json
+
+# Environments
+.env
+.venv
+env/
+venv/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# HPC / scratch
+*.sbatch.out
+slurm-*.out
+/tmp/
+numba_cache/
