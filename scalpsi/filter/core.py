@@ -68,7 +68,7 @@ def filter_dataset(
     input_path: str,
     output_path: str,
     splits_dir: str = None,
-    max_controls: int = 10_000,
+    max_controls: int = 0,
     seed: int = 42,
 ):
     """
@@ -85,7 +85,7 @@ def filter_dataset(
     splits_dir : str, optional
         Directory containing split*.json files. Defaults to data/splits/ in repo.
     max_controls : int
-        Maximum number of non-targeting control cells to keep.
+        Maximum number of non-targeting control cells to keep (0 = keep all).
     seed : int
         Random seed for control subsampling.
     """
@@ -113,8 +113,8 @@ def filter_dataset(
     print(f"  Cells with split genes: {pert_mask.sum():,}")
     print(f"  Control cells: {ctrl_mask.sum():,}")
 
-    # Subsample controls
-    if ctrl_mask.sum() > max_controls:
+    # Subsample controls (only if max_controls > 0)
+    if max_controls > 0 and ctrl_mask.sum() > max_controls:
         ctrl_idx = np.where(ctrl_mask)[0]
         keep_ctrl_idx = set(np.random.choice(ctrl_idx, size=max_controls, replace=False))
         ctrl_mask_downsampled = np.array([

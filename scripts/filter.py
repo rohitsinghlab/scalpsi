@@ -29,8 +29,8 @@ def main():
                         help="Path to write filtered h5ad file")
     parser.add_argument("--splits-dir", type=str, default=None,
                         help="Directory containing split*.json files (default: data/splits/ in repo)")
-    parser.add_argument("--max-controls", type=int, default=10_000,
-                        help="Maximum number of non-targeting control cells to keep")
+    parser.add_argument("--max-controls", type=int, default=0,
+                        help="Maximum number of non-targeting control cells to keep (0 = keep all)")
     parser.add_argument("--seed", type=int, default=42,
                         help="Random seed for control subsampling")
 
