@@ -1,19 +1,18 @@
-# scalpsi
+# Scalpsi
 
-**Scalpels and Sledgehammers: Why Mean Baselines Dominate Perturbation Prediction**
+**Scalpels and Sledgehammers: Why the Mean Baseline Excels at Perturbation Prediction**
 
-*Rohit Singh Lab*
+*Huan Liang and Rohit Singh — Duke University*
 
-A benchmarking framework for evaluating genetic perturbation prediction methods in single-cell transcriptomics. Compares 11+ methods across 6 cell lines using standardized preprocessing, 5-fold cross-validation, and 9 distance metrics.
+The mean baseline's dominance in perturbation prediction isn't a failure of model architectures — it reflects a conserved biological spectrum. "Sledgehammer" perturbations (core machinery) produce stereotyped responses the mean captures; "scalpels" (signaling regulators, epigenetic modifiers) produce gene-specific effects it misses. The Perturbation Specificity Index (PSI) formalizes this as a two-regime problem.
 
 ## Overview
 
 This repository provides:
-- **Preprocessing**: Normalize, log-transform, select HVGs, compute DEGs from raw h5ad datasets
-- **Method orchestration**: Run GEARS, scGPT, scFoundation, CPA, and 7+ other methods with unified I/O
-- **Evaluation**: Per-perturbation and per-gene metrics using `pertpy` distance functions
-- **Analysis**: Cross-cell-line consistency, SVD residual analysis, gene-perturbation interaction modeling
-- **Figures**: Notebooks for all paper figures
+- **PSI**: A variance-ratio metric quantifying each perturbation's deviation from the shared response (ρ = 0.86 with baseline accuracy, Kendall's W = 0.56–0.58 across cell types)
+- **Sledgehammer–Scalpel classification**: Genome-wide PSI predictions for all protein-coding genes
+- **Benchmarking pipeline**: Preprocessing, method orchestration (GEARS, scGPT, CPA, GenePert, and others), and PSI-stratified evaluation
+- **Reproducible analysis**: Notebooks for all paper figures
 
 ## Installation
 
@@ -133,13 +132,13 @@ scalpsi/
 
 ## Data
 
-Processed datasets are not included (1–33 GB each). See `data/README.md` for download instructions and expected directory structure.
+Raw Perturb-seq data from three studies: Replogle et al. 2022 (K562, RPE1), Nadig et al. 2025 (HepG2, Jurkat), and X-Atlas/Orion (HCT116, HEK293T). 2,278 perturbation targets are shared across all six cell types. See Step 0 above for filtering instructions. Genome-wide PSI predictions are available in `data/`.
 
 ## Citation
 
 If you use this code, please cite:
 
-> [Paper title and citation to be added upon publication]
+> Liang, H. and Singh, R. Scalpels and Sledgehammers: Why the Mean Baseline Excels at Perturbation Prediction. *Bioinformatics*, 2026. Under review at ECCB.
 
 ## License
 
