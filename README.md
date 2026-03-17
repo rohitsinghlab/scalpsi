@@ -38,17 +38,34 @@ export SCALPSI_SCRIPT_DIR=/path/to/method/scripts  # GEARS, scGPT, etc.
 
 ## Quick Start
 
+### 0. Filter raw data
+
+The three large raw datasets (K562, HCT116, HEK293T) must be filtered to keep only cells with perturbation genes that appear in the cross-validation splits, plus up to 10,000 non-targeting control cells. Raw data lives in `rawdata/perturbSeq/`.
+
+```bash
+# Filter one dataset
+python scripts/filter.py \
+    --dataset K562 \
+    --input rawdata/perturbSeq/K562_raw_sc.h5ad \
+    --output data_archive/K562_filtered.h5ad
+
+# Or filter all three at once
+./shell/filter_all.sh
+```
+
+The split files in `data/splits/` define which genes to keep (2,278 genes across 5 CV folds). Only K562, HCT116, and HEK293T are supported — the smaller datasets (rpe1, jurkat, hepg2) are already pre-filtered.
+
 ### 1. Preprocess a dataset
 
 ```bash
-scalpsi-preprocess --path your_data.h5ad --name MyDataset
+scalpsi-preprocess --path data_archive/K562_filtered.h5ad --name K562
 ```
 
 Or for multiple datasets sharing only common perturbations:
 
 ```bash
 scalpsi-preprocess-shared \
-    --datasets HEK_filtered.h5ad:HEK293T HCT_filtered.h5ad:HCT116 \
+    --datasets data_archive/HEK293T_filtered.h5ad:HEK293T data_archive/HCT116_filtered.h5ad:HCT116 \
     --output-dir $SCALPSI_DATA_DIR
 ```
 
@@ -82,6 +99,7 @@ Open `notebooks/analysis.ipynb` for cross-dataset performance analysis and figur
 scalpsi/
 ├── scalpsi/               # Python package
 │   ├── config.py          # Centralized path configuration (env vars)
+│   ├── filter/            # Filter raw datasets to CV split genes
 │   ├── preprocess/        # Data preprocessing (normalize, HVG, DEG)
 │   ├── methods/           # Method orchestration (GEARS, scGPT, etc.)
 │   ├── evaluation/        # Performance metrics (perturbation & gene level)
