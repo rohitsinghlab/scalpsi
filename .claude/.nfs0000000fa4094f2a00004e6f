@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//cwork/hl489/perturbBench/**)",
+      "Read(//hpc/group/singhlab/rawdata/**)"
+    ]
+  }
+}

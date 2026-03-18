@@ -17,3 +17,9 @@ DATA_DIR = REPO_ROOT / "data"
 # Created automatically by the preprocess step.
 # All downstream scripts (run, evaluate) read from here by default.
 DATASET2_DIR = REPO_ROOT / "preprocessed"
+
+# Method scripts directory (myGears.py, myCPA.py, etc.)
+SCRIPT_DIR = _PKG_ROOT / "methods" / "scripts"
+
+# Split files directory
+SPLIT_DIR = DATA_DIR / "splits"

@@ -55,25 +55,36 @@ Supported datasets: K562, RPE1, HepG2, Jurkat, HCT116, HEK293T.
 
 ### 1. Preprocess a dataset
 
-Normalizes, log-transforms, computes HVGs at multiple thresholds, and generates DEG files. Output goes to `preprocessed/` by default.
+Normalizes, log-transforms, computes HVGs at multiple thresholds, and generates DEG files. Output goes to `preprocessed/` by default. The filtering step already ensures all datasets share the same 2,278 perturbation targets.
 
 ```bash
 # Preprocess one dataset
 python scripts/preprocess.py --path filtered_datasets/K562_filtered.h5ad --name K562
 
 # Or preprocess all six at once
-# (small datasets independently, large datasets with shared perturbations)
 ./shell/preprocess_all.sh
 ```
 
 ### 2. Run prediction methods
 
-```bash
-# Run GEARS on split 0
-scalpsi-run --dataset MyDataset --methods GEARS --hvg 5000 --split-index 0
+Methods run inside an [Apptainer](https://apptainer.org/) container built from the [scPerturBench](https://github.com/bm2-lab/scPerturBench) image ([Zenodo](https://zenodo.org/records/15904698)). Each method uses a specific conda environment inside the container.
 
-# Run all methods
-scalpsi-run --dataset MyDataset --hvg 5000 --split-index 0
+```bash
+# 1. Download and convert the container image
+#    (see scPerturBench docs for download instructions)
+apptainer build scperturbench_v1.sif docker-archive://scperturbench_v1.tar
+
+# 2. Shell into the container (bind the repo directory)
+apptainer shell --nv --bind $PWD:/home/project/scalpsi scperturbench_v1.sif
+source /usr/local/anaconda3/etc/profile.d/conda.sh
+cd /home/project/scalpsi
+
+# 3. Run methods
+python scripts/run_methods.py --dataset K562 --methods GEARS --split-index 0
+python scripts/run_methods.py --dataset K562 --methods CPA scGPT GenePert linearModel_mean --split-index 0
+
+# Or run all methods on all datasets and splits
+bash shell/run_all.sh
 ```
 
 ### 3. Evaluate predictions
