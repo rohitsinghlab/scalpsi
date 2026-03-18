@@ -109,21 +109,23 @@ scalpsi/
 
 ## Methods
 
-| Method | Conda env | Needs GEARS? |
-|--------|-----------|-------------|
-| GEARS | gears | No |
-| scFoundation | gears | Yes |
-| scGPT | scGPT | No |
-| GenePert | gears | No |
-| GeneCompass | gears | Yes |
-| AttentionPert | gears | Yes |
-| scELMo | gears | Yes |
-| scouter | cpa | Yes |
-| baseMLP | cpa | Yes |
-| baseReg | cpa | Yes |
-| linearModel | linearModel | Yes |
-| linearModel_mean | gears | No |
-| CPA | cpa | No |
+We evaluate four methods in the paper: **TrainMean** (linearModel_mean), **CPA**, **scGPT**, and **GenePert**. Methods are run inside podman containers from the [scPerturBench](https://github.com/bm2-lab/scPerturBench) framework ([container image on Zenodo](https://zenodo.org/records/15904698)).
+
+> Wei, Z., Wang, Y., Gao, Y., Liu, Q. et al. Benchmarking algorithms for generalizable single-cell perturbation response prediction. *Nature Methods*, 2025.
+
+The container provides the following conda environments, each packaging one or more methods:
+
+| Environment | Methods |
+|-------------|---------|
+| cpa | CPA, scouter, biolord, inVAE, scDisInFact, scPRAM, scPreGAN, SCREEN, trVAE, cycleCDR, PRnet |
+| gears | GEARS, GenePert, AttentionPert, scFoundation, scELMo, GeneCompass |
+| scGPT | scGPT |
+| linearModel | linearModel |
+| pertpyV7 | evaluation metrics |
+| cellot | CellOT |
+| scarches | scGen |
+| scVIDR | scVIDR |
+| chemCPA | chemCPA |
 
 ## Data
 
