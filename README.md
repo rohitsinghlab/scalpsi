@@ -25,16 +25,6 @@ pip install -e .
 pip install -e ".[eval]"
 ```
 
-## Configuration
-
-Set environment variables to point to your data and method scripts:
-
-```bash
-export SCALPSI_DATA_DIR=/path/to/DataSet2          # processed datasets output
-export SCALPSI_BASE_DIR=/path/to/Pertb_benchmark   # benchmark root
-export SCALPSI_SCRIPT_DIR=/path/to/method/scripts  # GEARS, scGPT, etc.
-```
-
 ## Quick Start
 
 ### 0. Filter raw data
@@ -70,7 +60,7 @@ Or for multiple datasets sharing only common perturbations:
 ```bash
 scalpsi-preprocess-shared \
     --datasets data_archive/HEK293T_filtered.h5ad:HEK293T data_archive/HCT116_filtered.h5ad:HCT116 \
-    --output-dir $SCALPSI_DATA_DIR
+    --output-dir data_archive
 ```
 
 ### 2. Run prediction methods
@@ -102,7 +92,7 @@ Open `notebooks/analysis.ipynb` for cross-dataset performance analysis and figur
 ```
 scalpsi/
 ├── scalpsi/               # Python package
-│   ├── config.py          # Centralized path configuration (env vars)
+│   ├── config.py          # Path configuration
 │   ├── filter/            # Filter raw datasets to CV split genes
 │   ├── preprocess/        # Data preprocessing (normalize, HVG, DEG)
 │   ├── methods/           # Method orchestration (GEARS, scGPT, etc.)
