@@ -113,19 +113,16 @@ We evaluate four methods in the paper: **TrainMean** (linearModel_mean), **CPA**
 
 > Wei, Z., Wang, Y., Gao, Y., Liu, Q. et al. Benchmarking algorithms for generalizable single-cell perturbation response prediction. *Nature Methods*, 2025.
 
-The container provides the following conda environments, each packaging one or more methods:
+The methods used in this paper and their container environments:
 
-| Environment | Methods |
-|-------------|---------|
-| cpa | CPA, scouter, biolord, inVAE, scDisInFact, scPRAM, scPreGAN, SCREEN, trVAE, cycleCDR, PRnet |
-| gears | GEARS, GenePert, AttentionPert, scFoundation, scELMo, GeneCompass |
+| Method | Environment |
+|--------|-------------|
+| TrainMean (linearModel_mean) | gears |
+| CPA | cpa |
 | scGPT | scGPT |
-| linearModel | linearModel |
-| pertpyV7 | evaluation metrics |
-| cellot | CellOT |
-| scarches | scGen |
-| scVIDR | scVIDR |
-| chemCPA | chemCPA |
+| GenePert | gears |
+
+The container also includes many other methods (GEARS, scFoundation, AttentionPert, scouter, CellOT, scGen, etc.) — see the [scPerturBench repo](https://github.com/bm2-lab/scPerturBench) for the full list.
 
 ## Data
 
