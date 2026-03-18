@@ -6,7 +6,7 @@ Usage:
         --datasets HEK_filtered.h5ad:HEK293T HCT_filtered.h5ad:HCT116 K562_filtered.h5ad:K562 \\
         --output-dir /path/to/DataSet2
 
-Set SCALPSI_DATA_DIR to change the default output directory.
+Pass --output-dir to override the default preprocessed directory.
 """
 
 import argparse
@@ -25,7 +25,7 @@ def main():
     parser.add_argument("--min-cells", type=int, default=0,
                         help="Minimum cells per perturbation")
     parser.add_argument("--output-dir", type=str, default=None,
-                        help=f"Base output directory (default: $SCALPSI_DATA_DIR or {config.DATASET2_DIR})")
+                        help=f"Base output directory (default: {config.DATASET2_DIR})")
     parser.add_argument("--save-datasets-for", nargs='*', type=int, default=None,
                         help="HVG thresholds to save h5ad for (default: 5000 only)")
 

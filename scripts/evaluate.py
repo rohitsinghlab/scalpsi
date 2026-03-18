@@ -5,7 +5,7 @@ Usage:
     scalpsi-evaluate --dataset hepg2 jurkat rpe1 --hvg 5000 --methods GEARS scGPT CPA
     scalpsi-evaluate --dataset toy --hvg 1000 --methods GEARS --splits 0 1 2
 
-Set SCALPSI_DATA_DIR to point to your DataSet2 directory.
+Pass --base-dir to override the default preprocessed directory.
 """
 
 import argparse
@@ -29,7 +29,7 @@ def main():
     parser.add_argument('--splits', type=int, nargs='+', default=[0, 1, 2, 3, 4],
                         help='Splits to evaluate')
     parser.add_argument('--base-dir', type=str, default=None,
-                        help=f'DataSet2 directory (default: $SCALPSI_DATA_DIR or {config.DATASET2_DIR})')
+                        help=f'Preprocessed data directory (default: {config.DATASET2_DIR})')
     parser.add_argument('--output', type=str, default=None,
                         help='Output file path')
     parser.add_argument('--workers', type=int, default=1,

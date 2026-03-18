@@ -9,7 +9,7 @@ Outputs two files:
   2. Gene-aggregate parquet: one row per (dataset, method, split, gene) with
      correlations across perturbations
 
-Set SCALPSI_DATA_DIR to point to your DataSet2 directory.
+Pass base_dir to override the default preprocessed directory.
 """
 
 import os, sys, warnings, pickle

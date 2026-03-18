@@ -5,7 +5,7 @@ Usage:
     scalpsi-preprocess --path toy.h5ad
     scalpsi-preprocess --path toy.h5ad --name toy --output-dir /path/to/DataSet2
 
-Set SCALPSI_DATA_DIR to change the default output directory.
+Pass --output-dir to override the default preprocessed directory.
 """
 
 import argparse
@@ -32,7 +32,7 @@ def main():
     parser.add_argument("--max-ctrl", type=int, default=0,
                         help="Max control cells (0 = no downsampling)")
     parser.add_argument("--output-dir", type=str, default=None,
-                        help=f"Base output directory (default: $SCALPSI_DATA_DIR or {config.DATASET2_DIR})")
+                        help=f"Base output directory (default: {config.DATASET2_DIR})")
 
     args = parser.parse_args()
 

@@ -11,7 +11,7 @@ Usage via CLI:
     scalpsi-evaluate --dataset hepg2 jurkat rpe1 --hvg 5000 --methods GEARS scGPT CPA
     scalpsi-evaluate --dataset toy --hvg 1000 --methods GEARS --splits 0 1 2
 
-Set SCALPSI_DATA_DIR to point to your DataSet2 directory.
+Pass base_dir to override the default preprocessed directory.
 """
 
 import os, sys, warnings, pickle, gc

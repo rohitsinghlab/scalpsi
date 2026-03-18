@@ -12,3 +12,8 @@ REPO_ROOT = _PKG_ROOT.parent
 
 # Reference data directory (data/ in repo — gene_info.tsv, splits, etc.)
 DATA_DIR = REPO_ROOT / "data"
+
+# Default output directory for preprocessed datasets (h5ad + DEG files).
+# Created automatically by the preprocess step.
+# All downstream scripts (run, evaluate) read from here by default.
+DATASET2_DIR = REPO_ROOT / "preprocessed"

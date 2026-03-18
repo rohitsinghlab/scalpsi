@@ -5,8 +5,8 @@ Saves results in the DataSet2 directory structure.
 
 Based on myUtil1.py preData() function with extensions for multiple HVG thresholds.
 
-Output directory is controlled by the SCALPSI_DATA_DIR environment variable
-(default: ./DataSet2 relative to current working directory).
+Output directory defaults to preprocessed/ in the repo root.
+Pass output_base_dir to override.
 """
 
 import subprocess, os, sys
@@ -433,7 +433,7 @@ def preprocess_and_save(input_file, dataset_name,
         Max control cells (0 = no limit)
     output_base_dir : str or None
         Base directory for output. Defaults to config.DATASET2_DIR
-        (set SCALPSI_DATA_DIR env var to override).
+        Pass output_base_dir to override.
     allowed_perturbations : set or None
         If provided, only keep cells with these perturbations (+ control)
     save_datasets_for : list of int or None

@@ -55,16 +55,17 @@ Supported datasets: K562, RPE1, HepG2, Jurkat, HCT116, HEK293T.
 
 ### 1. Preprocess a dataset
 
+Normalizes, log-transforms, computes HVGs at multiple thresholds, and generates DEG files. Output goes to `preprocessed/` by default.
+
 ```bash
-scalpsi-preprocess --path filtered_datasets/K562_filtered.h5ad --name K562
+python scripts/preprocess.py --path filtered_datasets/K562_filtered.h5ad --name K562
 ```
 
-Or for multiple datasets sharing only common perturbations:
+Or for multiple datasets keeping only shared perturbations:
 
 ```bash
-scalpsi-preprocess-shared \
-    --datasets filtered_datasets/HEK293T_filtered.h5ad:HEK293T filtered_datasets/HCT116_filtered.h5ad:HCT116 \
-    --output-dir filtered_datasets
+python scripts/preprocess_shared.py \
+    --datasets filtered_datasets/HEK293T_filtered.h5ad:HEK293T filtered_datasets/HCT116_filtered.h5ad:HCT116
 ```
 
 ### 2. Run prediction methods
