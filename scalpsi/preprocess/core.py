@@ -123,7 +123,7 @@ def compute_shared_perturbations(datasets):
     return shared_perts
 
 
-def preData_multiHVG(adata, domaxNumsPerturb=0, domaxNumsControl=0, minNums=50, min_cells=10, allowed_perturbations=None):
+def preData_multiHVG(adata, domaxNumsPerturb=0, domaxNumsControl=0, minNums=0, min_cells=10, allowed_perturbations=None):
     """
     Preprocessing function that performs QC, normalization, log1p, and HVG selection.
 

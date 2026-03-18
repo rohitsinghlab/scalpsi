@@ -25,7 +25,7 @@ def main():
                         help="Path to input h5ad file")
     parser.add_argument("--name", type=str, default=None,
                         help="Dataset name (default: derived from filename)")
-    parser.add_argument("--min-cells", type=int, default=50,
+    parser.add_argument("--min-cells", type=int, default=0,
                         help="Minimum cells per perturbation to keep")
     parser.add_argument("--max-pert", type=int, default=0,
                         help="Max cells per perturbation (0 = no downsampling)")
