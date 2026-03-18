@@ -1,36 +1,48 @@
 #!/bin/bash
 #
-# Step 0: Filter raw perturbation datasets to cells with genes in CV splits.
+# Step 0: Filter all 6 raw perturbation datasets to cells with genes in CV splits.
 #
-# Raw data: rawdata/perturbSeq/ (symlink to /hpc/group/singhlab/rawdata/perturbSeq/)
-# Output:   data_archive/ or any directory you choose
+# Usage:
+#   ./shell/filter_all.sh
+#   ./shell/filter_all.sh --rawdata /path/to/rawdata --output /path/to/output
 #
-# Only the three large datasets need this step:
-#   K562     (~62 GB raw)  -> perturbation column: 'gene'
-#   HCT116   (~195 GB raw) -> perturbation column: 'gene_target'
-#   HEK293T  (~327 GB raw) -> perturbation column: 'gene_target'
 
-RAWDATA_DIR=rawdata/perturbSeq
-OUTPUT_DIR=data_archive
+RAWDATA_DIR="rawdata/perturbSeq"
+OUTPUT_DIR="filtered_datasets"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --rawdata) RAWDATA_DIR="$2"; shift 2 ;;
+        --output)  OUTPUT_DIR="$2";  shift 2 ;;
+        -h|--help)
+            echo "Usage: $0 [--rawdata DIR] [--output DIR]"
+            echo "  --rawdata  Directory containing raw h5ad files (default: rawdata/perturbSeq)"
+            echo "  --output   Directory for filtered output files (default: filtered_datasets)"
+            exit 0 ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
+    esac
+done
 
 echo "=== Filtering raw datasets to CV split genes ==="
+echo "  Raw data: ${RAWDATA_DIR}"
+echo "  Output:   ${OUTPUT_DIR}"
 
-echo "Filtering K562..."
-python scripts/filter.py \
-    --dataset K562 \
-    --input ${RAWDATA_DIR}/K562_raw_sc.h5ad \
-    --output ${OUTPUT_DIR}/K562_filtered.h5ad
+for dataset_info in \
+    "K562:K562_raw_sc.h5ad" \
+    "RPE1:rpe1_raw_sc.h5ad" \
+    "HepG2:hepg2_raw_sc.h5ad" \
+    "Jurkat:jurkat_raw_sc.h5ad" \
+    "HCT116:HCT116.h5ad" \
+    "HEK293T:HEK293T.h5ad"; do
 
-echo "Filtering HCT116..."
-python scripts/filter.py \
-    --dataset HCT116 \
-    --input ${RAWDATA_DIR}/HCT116.h5ad \
-    --output ${OUTPUT_DIR}/HCT116_filtered.h5ad
+    dataset="${dataset_info%%:*}"
+    filename="${dataset_info##*:}"
 
-echo "Filtering HEK293T..."
-python scripts/filter.py \
-    --dataset HEK293T \
-    --input ${RAWDATA_DIR}/HEK293T.h5ad \
-    --output ${OUTPUT_DIR}/HEK293T_filtered.h5ad
+    echo "Filtering ${dataset}..."
+    python scripts/filter.py \
+        --dataset "${dataset}" \
+        --input "${RAWDATA_DIR}/${filename}" \
+        --output "${OUTPUT_DIR}/${dataset}_filtered.h5ad"
+done
 
 echo "Done filtering all datasets!"

@@ -3,9 +3,7 @@ CLI: Filter a raw perturbation dataset to cells with genes in the CV splits.
 
 Usage:
     scalpsi-filter --dataset K562 --input rawdata/perturbSeq/K562_raw_sc.h5ad --output filtered/K562_filtered.h5ad
-    scalpsi-filter --dataset HEK293T --input rawdata/perturbSeq/HEK293T.h5ad --output filtered/HEK293T_filtered.h5ad
-
-Only supported for the three large datasets: K562, HCT116, HEK293T.
+    scalpsi-filter --dataset HepG2 --input rawdata/perturbSeq/hepg2_raw_sc.h5ad --output filtered/HepG2_filtered.h5ad
 """
 
 import argparse

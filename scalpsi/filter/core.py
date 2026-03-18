@@ -2,11 +2,8 @@
 Core filtering logic for raw perturbation datasets.
 
 Filters raw h5ad files to keep only cells whose perturbation target gene
-appears in the cross-validation split files, plus a subsample of non-targeting
-control cells.
-
-Only the three large datasets (K562, HCT116, HEK293T) require this filtering
-step. The smaller datasets (rpe1, jurkat, hepg2) are already pre-filtered.
+appears in the cross-validation split files, plus non-targeting control cells
+(optionally downsampled).
 """
 
 import json
@@ -16,11 +13,14 @@ from pathlib import Path
 
 from scalpsi import config
 
-# Datasets that require filtering, with their perturbation column names
+# Supported datasets with their perturbation column names
 VALID_DATASETS = {
-    "K562":    {"pert_col": "gene",        "file": "K562_raw_sc.h5ad"},
-    "HCT116":  {"pert_col": "gene_target", "file": "HCT116.h5ad"},
-    "HEK293T": {"pert_col": "gene_target", "file": "HEK293T.h5ad"},
+    "K562":    {"pert_col": "gene"},
+    "RPE1":    {"pert_col": "gene"},
+    "HepG2":   {"pert_col": "gene"},
+    "Jurkat":  {"pert_col": "gene"},
+    "HCT116":  {"pert_col": "gene_target"},
+    "HEK293T": {"pert_col": "gene_target"},
 }
 
 # Variants that should be treated as non-targeting controls
@@ -50,9 +50,8 @@ def _validate_dataset(dataset: str) -> dict:
     if dataset not in VALID_DATASETS:
         valid = ", ".join(VALID_DATASETS.keys())
         raise ValueError(
-            f"Dataset '{dataset}' is not supported for filtering. "
-            f"Only the large datasets require this step: {valid}. "
-            f"The smaller datasets (rpe1, jurkat, hepg2) are already pre-filtered."
+            f"Dataset '{dataset}' is not supported. "
+            f"Supported datasets: {valid}."
         )
     return VALID_DATASETS[dataset]
 
@@ -77,7 +76,7 @@ def filter_dataset(
     Parameters
     ----------
     dataset : str
-        Dataset name. Must be one of: K562, HCT116, HEK293T.
+        Dataset name. Must be one of: K562, RPE1, HepG2, Jurkat, HCT116, HEK293T.
     input_path : str
         Path to raw h5ad file.
     output_path : str

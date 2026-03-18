@@ -29,38 +29,42 @@ pip install -e ".[eval]"
 
 ### 0. Filter raw data
 
-Each raw dataset must be filtered to keep only cells whose perturbation target gene appears in the cross-validation splits (train, val, or test). The split files in `data/splits/` define 2,278 genes across 5 CV folds. Raw data lives in `rawdata/perturbSeq/`.
+Each raw dataset must be filtered to keep only cells whose perturbation target gene appears in the cross-validation splits (train, val, or test). The split files in `data/splits/` define 2,278 genes across 5 CV folds. Point `--input` to wherever you downloaded the raw h5ad files.
 
 ```bash
 # Filter one dataset
 python scripts/filter.py \
     --dataset K562 \
-    --input rawdata/perturbSeq/K562_raw_sc.h5ad \
-    --output data_archive/K562_filtered.h5ad
+    --input /path/to/K562_raw_sc.h5ad \
+    --output filtered_datasets/K562_filtered.h5ad
 
 # Optionally downsample non-targeting controls (default: keep all)
 python scripts/filter.py \
     --dataset K562 \
-    --input rawdata/perturbSeq/K562_raw_sc.h5ad \
-    --output data_archive/K562_filtered.h5ad \
+    --input /path/to/K562_raw_sc.h5ad \
+    --output filtered_datasets/K562_filtered.h5ad \
     --max-controls 10000
 
-# Or filter all three large datasets at once
+# Or filter all six datasets at once (assumes raw files in rawdata/perturbSeq/)
 ./shell/filter_all.sh
+# With custom paths:
+./shell/filter_all.sh --rawdata /path/to/rawdata --output /path/to/output
 ```
+
+Supported datasets: K562, RPE1, HepG2, Jurkat, HCT116, HEK293T.
 
 ### 1. Preprocess a dataset
 
 ```bash
-scalpsi-preprocess --path data_archive/K562_filtered.h5ad --name K562
+scalpsi-preprocess --path filtered_datasets/K562_filtered.h5ad --name K562
 ```
 
 Or for multiple datasets sharing only common perturbations:
 
 ```bash
 scalpsi-preprocess-shared \
-    --datasets data_archive/HEK293T_filtered.h5ad:HEK293T data_archive/HCT116_filtered.h5ad:HCT116 \
-    --output-dir data_archive
+    --datasets filtered_datasets/HEK293T_filtered.h5ad:HEK293T filtered_datasets/HCT116_filtered.h5ad:HCT116 \
+    --output-dir filtered_datasets
 ```
 
 ### 2. Run prediction methods
@@ -127,12 +131,6 @@ The container also includes many other methods (GEARS, scFoundation, AttentionPe
 ## Data
 
 Raw Perturb-seq data from three studies: Replogle et al. 2022 (K562, RPE1), Nadig et al. 2025 (HepG2, Jurkat), and X-Atlas/Orion (HCT116, HEK293T). 2,278 perturbation targets are shared across all six cell types. See Step 0 above for filtering instructions. Genome-wide PSI predictions are available in `data/`.
-
-## Citation
-
-If you use this code, please cite:
-
-> Liang, H. and Singh, R. Scalpels and Sledgehammers: Why the Mean Baseline Excels at Perturbation Prediction. *Bioinformatics*, 2026. Under review at ECCB.
 
 ## License
 
