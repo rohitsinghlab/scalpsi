@@ -1,7 +1,7 @@
 """
 Preprocessing script for perturbation datasets.
 Computes normalization, log1p, and HVGs at multiple thresholds.
-Saves results in the DataSet2 directory structure.
+Saves results in the preprocessed/ directory.
 
 Based on myUtil1.py preData() function with extensions for multiple HVG thresholds.
 

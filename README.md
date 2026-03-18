@@ -58,14 +58,12 @@ Supported datasets: K562, RPE1, HepG2, Jurkat, HCT116, HEK293T.
 Normalizes, log-transforms, computes HVGs at multiple thresholds, and generates DEG files. Output goes to `preprocessed/` by default.
 
 ```bash
+# Preprocess one dataset
 python scripts/preprocess.py --path filtered_datasets/K562_filtered.h5ad --name K562
-```
 
-Or for multiple datasets keeping only shared perturbations:
-
-```bash
-python scripts/preprocess_shared.py \
-    --datasets filtered_datasets/HEK293T_filtered.h5ad:HEK293T filtered_datasets/HCT116_filtered.h5ad:HCT116
+# Or preprocess all six at once
+# (small datasets independently, large datasets with shared perturbations)
+./shell/preprocess_all.sh
 ```
 
 ### 2. Run prediction methods
