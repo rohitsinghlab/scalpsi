@@ -89,12 +89,14 @@ bash shell/run_all.sh
 
 ### 3. Evaluate predictions
 
-```bash
-# Perturbation-level metrics
-scalpsi-evaluate --dataset MyDataset --hvg 5000 --methods GEARS scGPT linearModel_mean
+Computes per-(perturbation, gene) metrics and gene-level aggregates (Pearson/Spearman correlations, MSE, MAE on both raw and delta expression). Outputs parquet files.
 
-# Gene-level metrics
-scalpsi-evaluate-genes --dataset MyDataset --hvg 5000 --methods GEARS scGPT
+```bash
+# Gene-level evaluation (the main one — gives per-gene prediction accuracy)
+python scripts/evaluate_genes.py --dataset K562 --hvg 5000 --methods GEARS scGPT CPA linearModel_mean GenePert
+
+# Perturbation-level evaluation
+python scripts/evaluate.py --dataset K562 --hvg 5000 --methods GEARS scGPT CPA linearModel_mean GenePert
 ```
 
 ### 4. Analyze results
